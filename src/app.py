@@ -113,7 +113,7 @@ sources = html.Div(
                 ),
                 html.A(
                     "Code (.py file) |   ",
-                    href="https://github.com/Salvatore-Rocha/My-Dash-Apps/blob/f22f6ab40598472d71012e9a2e9111d7b7dfb508/Dash_apps/Styling/Styling_stocks_plots.py",
+                    href="https://github.com/Salvatore-Rocha/Stocks_reader/blob/bd11f7633d4332760b67efce0955937d0c62d8f6/src/app.py",
                     target="_blank",
                 ),
             ]
