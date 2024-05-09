@@ -1,6 +1,6 @@
 # Market Watch: A Dynamic Stock Tracker
 
-## A dashboard to analyzse Stock Trends
+## A dashboard to analyze stock trends
 
 This dashboard was created using the Dash app and Python libraries to download and parse stock data into dataframes. 
 It's designed to highlight the interactivity provided by the Dash app for plots. The stocks and dates were chosen arbitrarily and can be easily switched in the main code. 
