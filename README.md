@@ -1,43 +1,13 @@
-# Project Title
+# Market Watch: A Dynamic Stock Tracker
 
-## Description
+## A dashboard to analyzse Stock Trends
 
-A brief overview of the project, its purpose, features, and any relevant information.
+This dashboard was created using the Dash app and Python libraries to download and parse stock data into dataframes. 
+It's designed to highlight the interactivity provided by the Dash app for plots. The stocks and dates were chosen arbitrarily and can be easily switched in the main code. 
 
-## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
-- [Credits](#credits)
-- [Changelog](#changelog)
+## Visualization
 
-## Installation
+Here is an image on how it looks like: 
 
-Instructions on how to install or set up the project, including any dependencies or prerequisites.
-
-## Usage
-
-Guidance on how to use the project, including examples, command-line usage, or API documentation.
-
-## Configuration
-
-Information on how to configure or customize the project, such as environment variables or configuration files.
-
-## Contributing
-
-Guidelines for contributing to the project, including how to report issues, submit pull requests, and code style conventions.
-
-## License
-
-The license under which the project is distributed, along with any applicable copyright notices.
-
-## Credits
-
-Acknowledgments of individuals or organizations that contributed to the project, as well as links to relevant resources or inspiration.
-
-## Changelog
-
-A record of changes made to the project over time, typically organized by version number.
+![Image](https://github.com/Salvatore-Rocha/Stocks_reader/blob/ffba60a7711e738b956df5e7ec21fc0cef8d6d10/Imgs/Dash_Stock_Reader_Look.png)
