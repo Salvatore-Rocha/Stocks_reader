@@ -50,9 +50,25 @@ title= dbc.Col(
             width = 12
             )
 
+dates_histogram = dcc.DatePickerSingle( id ='histo-date',
+                                min_date_allowed= dt.datetime(2023,1,1),
+                                initial_visible_month=dt.date(2023, 8, 5),
+                                max_date_allowed= dt.datetime(2023,12,31),
+                                #date= dt.datetime(2023, 3, 2)
+                        )
+chklst_histogram = dcc.Checklist(       id ='histo-chklst', 
+                        value     = stocks["Symbols"].unique()[0:5],
+                        options   = [{"label": x,"value": x} for x in sorted(stocks["Symbols"].unique())],
+                        inline    = True,
+                        inputStyle={"margin-left":"6px", "margin-right": "2px"}
+                        )
+Histogram = dcc.Graph(      id = "histogram-stk",
+                            figure = {}
+                      )
+
 Cd_dpdw = dcc.Dropdown(     id = "candle-dpdn",
                     multi   = False,
-                    value   = sorted(stocks["Symbols"].unique())[1], 
+                    value   = sorted(stocks["Symbols"].unique())[2], 
                     options = [{"label": x,"value": x} for x in sorted(stocks["Symbols"].unique())]
                     )
 Candlestick = dcc.Graph(    id = "candle-stck",
@@ -70,28 +86,14 @@ Lineschart = dcc.Graph(     id = "lines-stck",
 
 line_dpdn = dcc.Dropdown(   id = "line-dpdn",
                     multi   = False,
-                    value   = sorted(stocks["Symbols"].unique())[1], 
+                    value   = sorted(stocks["Symbols"].unique())[3], 
                     options = [{"label": x,"value": x} for x in sorted(stocks["Symbols"].unique())]
                     )
 Linechart = dcc.Graph(      id = "line-stck",
                             figure = {}
                 )
 
-dates_histogram = dcc.DatePickerSingle( id ='histo-date',
-                                min_date_allowed= dt.datetime(2023,1,1),
-                                initial_visible_month=dt.date(2023, 8, 5),
-                                max_date_allowed= dt.datetime(2023,12,31),
-                                #date= dt.datetime(2023, 3, 2)
-                        )
-chklst_histogram = dcc.Checklist(       id ='histo-chklst', 
-                        value     = stocks["Symbols"].unique()[0:5],
-                        options   = [{"label": x,"value": x} for x in sorted(stocks["Symbols"].unique())],
-                        inline    = True,
-                        inputStyle={"margin-left":"6px", "margin-right": "2px"}
-                        )
-Histogram = dcc.Graph(      id = "histogram-stk",
-                            figure = {}
-                      )
+
 def weekend_tracker(stock_date):
     date_obj = dt.datetime.strptime(stock_date, "%Y-%m-%d")
     # Check if the day of the week is either Saturday (5) or Sunday (6)
@@ -124,7 +126,8 @@ sources = html.Div(
 app =  dash.Dash(__name__, 
                  external_stylesheets= [dbc.themes.SOLAR, dbc.icons.FONT_AWESOME, dbc_css],)
 server = app.server
-app.layout = dbc.Container([
+app.layout = dbc.Container(style={'padding': '50px'},
+    children = [
     dbc.Row([ #Title
             title
             ]),
@@ -171,25 +174,25 @@ app.layout = dbc.Container([
                 ], 
                 width= 7),
             ]),
-    dbc.Row([ #Text for line plots
-        dbc.Col([html.H5("➡️ Comparing how different stocks perform helps investors decide which ones to buy or sell.\
+    html.Br(),
+    dbc.Row([ #Text + Single line + multiple lines plot
+            dbc.Col([
+                html.H6("➡️ Comparing how different stocks perform helps investors decide which ones to buy or sell.\
                         It also helps them manage risks and make sure their investment portfolio is balanced and set up for success."),
-                 html.H5("🟩 Below, you'll find plots comparing the behavior of a single stock versus multiple stocks throughout the entire year of 2023.")],
-                width= 7)
-            ]),
-    dbc.Row([ #Single line + multiple lines plot
+                 html.H6("🟩 The plots to the right will help us compare the behavior of a single stock versus multiple stocks throughout the entire year of 2023.")
+                ], width= 2),
             dbc.Col([
                 line_dpdn,
                 Linechart,
-                ], width= 6),
+                ], width= 5),
             dbc.Col([
                 lines_dpdn,
                 Lineschart,
-                ], width= 6),
+                ], width= 5),
             ],
-            className="g-0" #this is the new version of "no_gutters" which is deprecated
+            #className="g-0" #this is the new version of "no_gutters" which is deprecated
             ),
-    dbc.Row([ #Links
+    dbc.Row([ #Links/ Sources
             sources
             ])
 ], 
@@ -218,7 +221,7 @@ def histogram_plot(selected_stonks,date_set):
         if weekend_tracker(date_set) == True:
             fig.update_layout(title_text=f'Cannot show data, Date -> {date_set} <- falls on a weekend')
         else:
-            fig.update_layout(title_text=f'Closing Values | Data shown is from the Date {date_set}')
+            fig.update_layout(title_text=f'Closing Values of multple Stocks | Data shown is from the Date {date_set}')
         return fig
 
 # Line chart - Single
@@ -235,6 +238,7 @@ def single_line_plot(selected_stonk):
                     hover_data=["Open","Close","High","Low"],
                     template= "solar"
                     )
+        fig.update_layout(title_text=f'Closing Values of the {selected_stonk} stock during 2023')
         return fig
 
 # Line chart - Multiple
@@ -251,6 +255,7 @@ def multiple_lines_plot(selected_stonks):
                     hover_data=["Open","Close","High","Low"],
                     template= "solar"
                     )
+        fig.update_layout(title_text=f'Closing Values of multiple stocks during 2023')
         return fig
     
 # Candlestick chart - Single
